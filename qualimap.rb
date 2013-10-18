@@ -14,12 +14,13 @@ class Qualimap < Formula
   end
 
   def install
-    chmod 0755, 'qualimap'
-    prefix.install Dir['*']
-    mkdir_p bin
-    mkdir_p lib
-    bin.install prefix/'qualimap'
-    lib.install prefix/'qualimap.jar'
+    bin.install 'qualimap'
+    libexec.install 'scripts'
+    libexec.install 'species'
+    libexec.install Dir['lib/*.jar']
+    libexec.install 'qualimap.jar'
+    (share/'java').install_symlink '../../libexec/qualimap.jar'
+    doc.install 'QualimapManual.pdf'
   end
 
   def test
@@ -50,7 +51,7 @@ __END__
  #echo $QUALIMAP_HOME
  #echo "ARGS are ${ARGS[@]}"
 +export BREWDIR=$(echo $QUALIMAP_HOME | sed -e 's/bin$//g')
-+export QUALIMAP_LIBDIR=$(dirname $(readlink -f $BREWDIR/lib/qualimap.jar))
++export QUALIMAP_LIBDIR=$(dirname $(readlink -f $BREWDIR/share/java/qualimap.jar))
  
 -java $java_options -classpath $QUALIMAP_HOME/qualimap.jar:$QUALIMAP_HOME/lib/* org.bioinfo.ngs.qc.qualimap.main.NgsSmartMain "${ARGS[@]}"
 +java $java_options -classpath $QUALIMAP_LIBDIR/qualimap.jar:$QUALIMAP_LIBDIR/* org.bioinfo.ngs.qc.qualimap.main.NgsSmartMain "${ARGS[@]}"
