@@ -9,11 +9,12 @@ class Qualimap < Formula
   depends_on 'r' => :optional
 
   def patches
-    # fixes path setup for java libs and qualimap bin
+    # fixes path setup in qualimap shell script for java libraries inside libexec
     DATA
   end
 
   def install
+    inreplace 'qualimap', /QUALIMAP_LIBDIR=/, 'QUALIMAP_LIBDIR=' + libexec
     bin.install 'qualimap'
     libexec.install 'scripts'
     libexec.install 'species'
@@ -46,12 +47,11 @@ __END__
  
  shell_path=`dirname "$prg"`;
  absolute=`echo $shell_path | grep "^/"`;
-@@ -76,8 +78,10 @@
+@@ -76,8 +76,9 @@ fi
  
  #echo $QUALIMAP_HOME
  #echo "ARGS are ${ARGS[@]}"
-+export BREWDIR=$(echo $QUALIMAP_HOME | sed -e 's/bin$//g')
-+export QUALIMAP_LIBDIR=$(dirname $(readlink -f $BREWDIR/share/java/qualimap.jar))
++export QUALIMAP_LIBDIR=
  
 -java $java_options -classpath $QUALIMAP_HOME/qualimap.jar:$QUALIMAP_HOME/lib/* org.bioinfo.ngs.qc.qualimap.main.NgsSmartMain "${ARGS[@]}"
 +java $java_options -classpath $QUALIMAP_LIBDIR/qualimap.jar:$QUALIMAP_LIBDIR/* org.bioinfo.ngs.qc.qualimap.main.NgsSmartMain "${ARGS[@]}"
