@@ -2,8 +2,8 @@ require "formula"
 
 class Delly < Formula
   homepage "https://github.com/tobiasrausch/delly"
-  url "https://github.com/tobiasrausch/delly/archive/v0.3.3.tar.gz"
-  sha1 "b3537ee3276784356019fbb5c1b624d64f82469e"
+  url "https://github.com/tobiasrausch/delly/archive/v0.5.3.tar.gz"
+  sha1 "0ef13ecbcabbbc86e996e4b0812ce272b902ed76"
 
   option "with-binary", "Install a statically linked binary for 64-bit Linux" if OS.linux?
 
@@ -14,8 +14,8 @@ class Delly < Formula
   end
 
   resource "linux-binary" do
-    url "https://github.com/tobiasrausch/delly/releases/download/v0.3.3/delly_v0.3.3_linux_x86_64bit"
-    sha1 "50db4727dc5d163338d59b48f79d9f7041b2bfd9"
+    url "https://github.com/tobiasrausch/delly/releases/download/v0.5.3/delly_v0.5.3_parallel_linux_x86_64bit"
+    sha1 "2acf827d051f8903fc70b6400584322e81f10f1d"
   end
 
   def install
@@ -27,10 +27,10 @@ class Delly < Formula
     end
 
     if build.with? "binary"
-      resource("linux-binary").stage { bin.install "delly_v0.3.3_linux_x86_64bit" => "delly" }
+      resource("linux-binary").stage { bin.install "delly_v0.5.3_parallel_linux_x86_64bit" => "delly" }
 
     else
-      system "make", "CXX=#{ENV.cxx}"
+      system "make", "CXX=#{ENV.cxx}", "PARALLEL=1"
       bin.install "src/delly"
     end
 
