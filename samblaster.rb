@@ -3,8 +3,8 @@ class Samblaster < Formula
   #doi "10.1093/bioinformatics/btu314"
   #tag "bioinformatics"
 
-  url "https://github.com/GregoryFaust/samblaster/releases/download/v.0.1.21/samblaster-v.0.1.21.tar.gz"
-  sha1 "69514701966b1876af24ee09d4b4dd5a1622af86"
+  url "https://github.com/GregoryFaust/samblaster/releases/download/v.0.1.22/samblaster-v.0.1.22.tar.gz"
+  sha1 "15a583942a99fefb09a887bf3e69c1bfb8acf3fe"
   head "https://github.com/GregoryFaust/samblaster"
 
   bottle do
